@@ -1,6 +1,3 @@
-const canvas = document.getElementById("canv");
-const ctx = canvas.getContext("2d");
-
 const COLOR_RED = 'rgba(255, 26, 104, 1)';
 const COLOR_BLUE = 'rgba(54, 162, 235, 1)';
 const COLOR_YELLOW = 'rgba(255, 206, 86, 1)';
@@ -16,9 +13,6 @@ const COLOR_BELLY = 'rgba(242, 242, 242, 1)';
 
 const TEXT_FONT_DEFAULT = "20px Arial";
 
-var canv_width = canvas.width;
-var canv_height = canvas.height;
-
 var main_body_oval_X = 0; // starting x position of the tux
 var main_body_oval_Y = 0; // starting y position
 var s = 0.0; // size of the tux
@@ -32,31 +26,18 @@ var right_hip_start_X = 0;
 var right_hip_start_Y = 0;
 var arm_offset_X = 110;
 var arm_offset_Y = 135;
+var left_foot_X = 0;
+var left_foot_Y = 0;
+var right_foot_X = 0;
+var right_foot_Y = 0;
 //var foot_width = 165*s;
 //var foot_height = 50*s;
 
 
-// adding coordinates of mouse position
-var coords = document.getElementById('mouse-coords');
-function tellPos(p)
-{
-	coords.innerHTML = 'X: ' + parseInt(p.pageX - 8) + '<br/>Y:' + parseInt(p.pageY - 44);
-}
-addEventListener('mousemove', tellPos, false);
-
-
-function main()
-{
-	draw_tux(coord_x=250,
-			 coord_y=200,
-			 size=1.0,
-			 debug_flag=true,
-			 paint_flag=false);
-}
 
 // 'size' variable is the number from 0.1 to 1 where 1 means the original
 // and most huge size while 0.1 means the most small size of tux
-function draw_tux(coord_x, coord_y, size, d_flag, p_flag)
+function draw_tux(ctx, coord_x, coord_y, size, d_flag, p_flag)
 {
 	main_body_oval_X = coord_x;
 	main_body_oval_Y = coord_y;
@@ -70,14 +51,16 @@ function draw_tux(coord_x, coord_y, size, d_flag, p_flag)
 	draw_right_arm(ctx);
 
 	// drawing left foot
-	var left_foot_X = left_hip_start_X - 30*s;
-	var left_foot_Y = left_hip_start_Y + 250*s + 100*s;
+	left_foot_X = left_hip_start_X - 30*s;
+	left_foot_Y = left_hip_start_Y + 250*s + 100*s;
 	draw_foot(ctx, left_foot_X, left_foot_Y);
 
 	// drawing right foot
-	var right_foot_X = right_hip_start_X - 165*s + 30*s;
-	var right_foot_Y = right_hip_start_Y + 250*s + 100*s;
+	right_foot_X = right_hip_start_X - 165*s + 30*s;
+	right_foot_Y = right_hip_start_Y + 250*s + 100*s;
 	draw_foot(ctx, right_foot_X, right_foot_Y);
+
+	draw_feet_jumper(ctx);
 
 	// drawing the gray jumper between the foots
 	//alert(parseInt(left_foot_X + 165*s) + " " + left_foot_Y);
@@ -233,22 +216,110 @@ function draw_foot(ctx, foot_X, foot_Y)
 function draw_feet_jumper(ctx)
 {
 	// the top-left point
-	var left_foot_x1 = left_foot_X + foot_width - 22;
-	var left_foot_y1 = left_foot_Y - 68;
+	var left_foot_x1 = left_foot_X + 165*s - 22*s;
+	var left_foot_y1 = left_foot_Y - 60*s - 8*s;
 
 	// the bottom-left point
-	var left_foot_x2 = left_foot_X + foot_width - 5;
-	var left_foot_y2 = left_foot_Y + 3;
+	var left_foot_x2 = left_foot_X + 165*s + 5*s;
+	var left_foot_y2 = left_foot_Y - 3*s;
 
 	// the top-right point
-	var right_foot_x1 = left_foot_X + foot_width + 28;
-	var right_foot_y1 = left_foot_Y - 62;
+	var right_foot_x1 = right_foot_X + 39*s;
+	var right_foot_y1 = right_foot_Y - 60*s - 14*s;
 
 	// the bottom-right point
-	var right_foot_x2 = left_foot_X + foot_width - 4;
-	var right_foot_y2 = left_foot_Y + 3;
+	var right_foot_x2 = right_foot_X - 5*s;
+	var right_foot_y2 = right_foot_Y - 3*s;
 
-	
+	var x1 = right_foot_x1 - 55*s;
+	var y1 = right_foot_y1 + 13*s;
+	var x2 = right_foot_x2 - 12*s;
+	var y2 = right_foot_y2 - 8*s;
+
+	var X1 = left_foot_x2 + 23*s;
+	var Y1 = left_foot_y2 - 25*s;
+	var X2 = left_foot_x1 + 7*s;
+	var Y2 = left_foot_y1 - 3*s;
+
+	var top_x1 = left_foot_x1 + 5*s;
+	var top_y1 = left_foot_y1 - 8*s;
+	var top_x2 = main_body_oval_X +
+				 s*(right_temple_X_offset/2);
+	var top_y2 = right_foot_y1 + 30*s + 6*s;
+
+	var top2_x1 = main_body_oval_X +
+				  s*(right_temple_X_offset/2);
+	var top2_y1 = right_foot_y1 + 30*s + 6*s;
+	var top2_x2 = right_foot_x1 - 12*s;
+	var top2_y2 = right_foot_y1 - 8*s;
+
+	var bottom_x1 = right_foot_x2;
+	var bottom_y1 = right_foot_y2 - 4*s;
+	var bottom_x2 = left_foot_x2;
+	var bottom_y2 = left_foot_y2 - 4*s;
+
+	if (debug_flag)
+	{
+		//ctx.fillStyle = COLOR_GREEN;
+		//ctx.fillRect(left_foot_x1, left_foot_y1, 5*s, 5*s);
+		//ctx.fillRect(left_foot_x2, left_foot_y2, 5*s, 5*s);
+		//ctx.fillRect(right_foot_x1, right_foot_y1, 5*s, 5*s);
+		//ctx.fillRect(right_foot_x2, right_foot_y2, 5*s, 5*s);
+		ctx.fillStyle = COLOR_PURPLE;
+		//ctx.fillRect(x1, y1, 3*s, 3*s);
+		//ctx.fillRect(x2, y2, 3*s, 3*s);
+		//ctx.fillRect(X1, Y1, 3*s, 3*s);
+		//ctx.fillRect(X2, Y2, 3*s, 3*s);
+		//ctx.fillRect(top_x1, top_y1, 3*s, 3*s);
+		//ctx.fillRect(top_x2, top_y2, 3*s, 3*s);
+		//ctx.fillRect(top2_x1, top2_y1, 3*s, 3*s);
+		//ctx.fillRect(top2_x2, top2_y2, 3*s, 3*s);
+		ctx.fillRect(bottom_x1, bottom_y1, 3*s, 3*s);
+		ctx.fillRect(bottom_x2, bottom_y2, 3*s, 3*s);
+	}
+
+	ctx.beginPath();
+		// top-left
+		ctx.moveTo(left_foot_x1, left_foot_y1);
+
+		// half way to the top-right point
+		ctx.bezierCurveTo(top_x1, top_y1,
+						  top_x2, top_y2,
+						  main_body_oval_X + s*(right_temple_X_offset/2),
+						  right_foot_y1 + 30*s);
+		// top-right
+		ctx.bezierCurveTo(top2_x1, top2_y1,
+						  top2_x2, top2_y2,
+						  right_foot_x1, right_foot_y1);
+		// bottom-right
+		ctx.bezierCurveTo(x1, y1, x2, y2,
+						  right_foot_x2, right_foot_y2);
+		// bottom-left
+		ctx.bezierCurveTo(bottom_x1, bottom_y1,
+						  bottom_x2, bottom_y2,
+						  left_foot_x2, left_foot_y2);
+
+		// top-left
+		ctx.bezierCurveTo(X1, Y1, X2, Y2,
+						  left_foot_x1, left_foot_y1);
+
+		if (paint_flag)
+		{
+			ctx.strokeStyle = COLOR_JUMPER;
+			ctx.fillStyle = COLOR_JUMPER;
+			ctx.fill();
+			ctx.fillStyle = COLOR_BLACK;
+		}
+		else
+			ctx.strokeStyle = COLOR_GREEN;
+		ctx.stroke();
+
+	ctx.closePath();
+}
+
+function draw_left_eye(ctx)
+{
+
 }
 
 function draw_belly(ctx)
