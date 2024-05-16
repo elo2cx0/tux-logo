@@ -313,6 +313,7 @@ function draw_feet_jumper(ctx)
 		else
 			ctx.strokeStyle = COLOR_GREEN;
 		ctx.stroke();
+		ctx.strokeStyle = COLOR_BLACK;
 
 	ctx.closePath();
 }

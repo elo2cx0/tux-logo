@@ -8,40 +8,13 @@
 			canvas { border: 1px solid #000000; }
 		</style>
 	</head>
-	<body>
+	<body onload="animate();">
 		<div id="mouse-coords"></div>
 
 		<canvas id="canv" width="800px" height="800px">
 			Tu navegador no soporta el elemento canvas
 		</canvas>
 		<script type="text/javascript" src="tux.js"></script>
-		<script type="text/javascript">
-		const canvas = document.getElementById("canv");
-		const ctx = canvas.getContext("2d");
-
-		var canv_width = canvas.width;
-		var canv_height = canvas.height;
-
-		// adding coordinates of mouse position
-		var coords = document.getElementById('mouse-coords');
-		function tellPos(p)
-		{
-			coords.innerHTML = 'X: ' + p.pageX + '<br/>Y:' + p.pageY;
-		}
-		addEventListener('mousemove', tellPos, false);
-
-
-		function main()
-		{
-			draw_tux(ctx,
-				coord_x=250,
-				coord_y=200,
-				size=1.0,
-				debug_flag=true,
-				paint_flag=false);
-		}
-		
-		main();
-		</script>
+		<script type="text/javascript" src="debug.js"></script>
 	</body>
 </html>
