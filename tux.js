@@ -15,6 +15,7 @@ const COLOR_BELLY = 'rgba(242, 242, 242, 1)';
 
 const TEXT_FONT_DEFAULT = "20px Arial";
 
+
 var main_body_oval_X = 0; // starting x position of the tux
 var main_body_oval_Y = 0; // starting y position
 var s = 0.0; // size of the tux
@@ -38,6 +39,9 @@ var left_eye_X = 0;
 var left_eye_Y = 0;
 var right_eye_X = 0;
 var right_eye_Y = 0;
+
+var beak_eye_X = 0;
+var beak_eye_Y = 0;
 
 //var foot_width = 165*s;
 //var foot_height = 50*s;
@@ -76,6 +80,8 @@ function draw_tux(ctx, coord_x, coord_y, size, d_flag, p_flag)
 
 	draw_right_eye(ctx);
 	draw_right_pupil(ctx);
+
+	draw_beak(ctx);
 
 	// drawing the gray jumper between the foots
 	//alert(parseInt(left_foot_X + 165*s) + " " + left_foot_Y);
@@ -338,12 +344,12 @@ function draw_feet_jumper(ctx)
 
 function draw_left_eye(ctx)
 {
-	left_eye_X = main_body_oval_X + 48;
-	left_eye_Y = main_body_oval_Y + 110;
+	left_eye_X = main_body_oval_X + 48*s;
+	left_eye_Y = main_body_oval_Y + 110*s;
 	ctx.beginPath();
 		ctx.ellipse(left_eye_X, left_eye_Y,
-					50, // x-radius
-					62, // y-radius
+					50*s, // x-radius
+					62*s, // y-radius
 					0, // rotation
 					0, // start_angle
 					2 * Math.PI); // direction
@@ -364,9 +370,9 @@ function draw_left_eye(ctx)
 function draw_left_pupil(ctx)
 {
 	ctx.beginPath();
-		ctx.ellipse(left_eye_X + 35, left_eye_Y + 3,
-					15, // x-radius
-					24, // y-radius
+		ctx.ellipse(left_eye_X + 35*s, left_eye_Y + 3*s,
+					15*s, // x-radius
+					24*s, // y-radius
 					0, // rotation
 					0, // start_angle
 					2 * Math.PI); // direction
@@ -381,12 +387,12 @@ function draw_left_pupil(ctx)
 
 function draw_right_eye(ctx)
 {
-	right_eye_X = main_body_oval_X + 153;
-	right_eye_Y = main_body_oval_Y + 110;
+	right_eye_X = main_body_oval_X + 153*s;
+	right_eye_Y = main_body_oval_Y + 110*s;
 	ctx.beginPath();
 		ctx.ellipse(right_eye_X, right_eye_Y,
-					52, // x-radius
-					42, // y-radius
+					52*s, // x-radius
+					42*s, // y-radius
 					-Math.PI / 22, // rotation
 					0, // start_angle
 					2 * Math.PI); // direction
@@ -407,9 +413,9 @@ function draw_right_eye(ctx)
 function draw_right_pupil(ctx)
 {
 	ctx.beginPath();
-		ctx.ellipse(right_eye_X - 39, right_eye_Y + 3,
-					12, // x-radius
-					21, // y-radius
+		ctx.ellipse(right_eye_X - 39*s, right_eye_Y + 3*s,
+					12*s, // x-radius
+					21*s, // y-radius
 					0, // rotation
 					0, // start_angle
 					2 * Math.PI); // direction
@@ -424,7 +430,47 @@ function draw_right_pupil(ctx)
 
 function draw_beak(ctx)
 {
+	beak_X = main_body_oval_X + 56*s;
+	beak_Y = main_body_oval_Y + 155*s;
+	
+	ctx.beginPath();
+		ctx.moveTo(beak_X, beak_Y);
+		ctx.bezierCurveTo(beak_X + 25*s, beak_Y - 15*s,
+						  beak_X + 43*s, beak_Y - 15*s,
+						  beak_X + 43*s, beak_Y - 15*s);
+		ctx.bezierCurveTo(beak_X + 43*s, beak_Y - 15*s,
+						  beak_X + 87*s - 25*s, beak_Y - 15*s,
+						  beak_X + 87*s, beak_Y);
 
+		ctx.strokeStyle = COLOR_BLACK;
+		ctx.quadraticCurveTo(beak_X + 87*s + 3*s, beak_Y + 4*s,
+							 beak_X + 87*s, beak_Y + 10*s); 
+		ctx.lineTo(beak_X + 50*s, beak_Y + 50*s);
+		ctx.quadraticCurveTo(beak_X + 50*s - 7*s, beak_Y + 50*s + 5*s,
+							 beak_X + 37*s, beak_Y + 50*s);
+		ctx.lineTo(beak_X, beak_Y + 10*s);
+		ctx.quadraticCurveTo(beak_X - 3*s, beak_Y + 10*s - 4*s,
+							 beak_X, beak_Y);							 
+		
+		/*var beak_grad = ctx.createLinearGradient(beak_X, beak_Y,
+												 beak_X + 87, beak_Y);
+		beak_grad.addColorStop(0, 'rgba(255, 211, 252)');
+		beak_grad.addColorStop(1, 'rgba(255, 62, 181)');*/
+			
+		if (paint_flag)
+		{
+			ctx.strokeStyle = COLOR_FOOT;
+			ctx.fillStyle = COLOR_FOOT;
+			ctx.fill();
+			ctx.fillStyle = COLOR_BLACK;
+		}
+		else
+			ctx.strokeStyle = COLOR_BLACK;
+		ctx.stroke();
+		ctx.strokeStyle = COLOR_BLACK;
+		
+
+	ctx.closePath();
 }
 
 function draw_belly(ctx)
