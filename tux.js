@@ -5,7 +5,9 @@ const COLOR_GREEN = 'rgba(75, 192, 192, 1)';
 const COLOR_PURPLE = 'rgba(153, 102, 255, 1)';
 const COLOR_GREY = 'rgba(215, 215, 215, 1)';
 const COLOR_BLACK = 'rgba(0, 0, 0, 1)';
+const COLOR_WHITE = 'rgba(255, 255, 255, 1)';
 const COLOR_DARK_BLUE = 'rgba(15, 10, 222, 1)';
+const COLOR_AQUA = 'rgba(54, 224, 235, 1)'; // for axis drawing
 
 const COLOR_FOOT = 'rgba(205, 168, 9, 1)';
 const COLOR_JUMPER = 'rgba(99, 99, 99, 1)';
@@ -26,10 +28,17 @@ var right_hip_start_X = 0;
 var right_hip_start_Y = 0;
 var arm_offset_X = 110;
 var arm_offset_Y = 135;
+
 var left_foot_X = 0;
 var left_foot_Y = 0;
 var right_foot_X = 0;
 var right_foot_Y = 0;
+
+var left_eye_X = 0;
+var left_eye_Y = 0;
+var right_eye_X = 0;
+var right_eye_Y = 0;
+
 //var foot_width = 165*s;
 //var foot_height = 50*s;
 
@@ -62,6 +71,12 @@ function draw_tux(ctx, coord_x, coord_y, size, d_flag, p_flag)
 
 	draw_feet_jumper(ctx);
 
+	draw_left_eye(ctx);
+	draw_left_pupil(ctx);
+
+	draw_right_eye(ctx);
+	draw_right_pupil(ctx);
+
 	// drawing the gray jumper between the foots
 	//alert(parseInt(left_foot_X + 165*s) + " " + left_foot_Y);
 	//alert(right_foot_X + " " + right_foot_Y);
@@ -73,7 +88,10 @@ function draw_tux(ctx, coord_x, coord_y, size, d_flag, p_flag)
 function draw_body(ctx)
 {
 	if (debug_flag)
+	{
 		draw_dividing_line(ctx);
+		draw_axis(ctx);
+	}
 	draw_top(ctx);
 	draw_left_temple_side(ctx);
 	draw_right_temple_side(ctx);
@@ -320,6 +338,92 @@ function draw_feet_jumper(ctx)
 
 function draw_left_eye(ctx)
 {
+	left_eye_X = main_body_oval_X + 48;
+	left_eye_Y = main_body_oval_Y + 110;
+	ctx.beginPath();
+		ctx.ellipse(left_eye_X, left_eye_Y,
+					50, // x-radius
+					62, // y-radius
+					0, // rotation
+					0, // start_angle
+					2 * Math.PI); // direction
+		ctx.lineWidth = 4;
+		ctx.strokeStyle = COLOR_JUMPER;
+		ctx.stroke();
+		ctx.lineWidth = 1;
+		ctx.strokeStyle = COLOR_BLACK;
+		if (paint_flag)
+		{
+			ctx.fillStyle = COLOR_WHITE;
+			ctx.fill();
+			ctx.fillStyle = COLOR_BLACK;
+		}
+	ctx.closePath();
+}
+
+function draw_left_pupil(ctx)
+{
+	ctx.beginPath();
+		ctx.ellipse(left_eye_X + 35, left_eye_Y + 3,
+					15, // x-radius
+					24, // y-radius
+					0, // rotation
+					0, // start_angle
+					2 * Math.PI); // direction
+		ctx.stroke();
+		if (paint_flag)
+		{
+			ctx.fillStyle = COLOR_BLACK;
+			ctx.fill();
+		}	
+	ctx.closePath();
+}
+
+function draw_right_eye(ctx)
+{
+	right_eye_X = main_body_oval_X + 153;
+	right_eye_Y = main_body_oval_Y + 110;
+	ctx.beginPath();
+		ctx.ellipse(right_eye_X, right_eye_Y,
+					52, // x-radius
+					42, // y-radius
+					-Math.PI / 22, // rotation
+					0, // start_angle
+					2 * Math.PI); // direction
+		ctx.lineWidth = 4;
+		ctx.strokeStyle = COLOR_JUMPER;
+		ctx.stroke();
+		ctx.lineWidth = 1;
+		ctx.strokeStyle = COLOR_BLACK;
+		if (paint_flag)
+		{
+			ctx.fillStyle = COLOR_WHITE;
+			ctx.fill();
+			ctx.fillStyle = COLOR_BLACK;
+		}
+	ctx.closePath();
+}
+
+function draw_right_pupil(ctx)
+{
+	ctx.beginPath();
+		ctx.ellipse(right_eye_X - 39, right_eye_Y + 3,
+					12, // x-radius
+					21, // y-radius
+					0, // rotation
+					0, // start_angle
+					2 * Math.PI); // direction
+		ctx.stroke();
+		if (paint_flag)
+		{
+			ctx.fillStyle = COLOR_BLACK;
+			ctx.fill();
+		}
+	ctx.closePath();
+}
+
+function draw_beak(ctx)
+{
 
 }
 
@@ -337,6 +441,8 @@ function fill_if_paint_flag(ctx)
 	}
 }
 
+/* DEBUGGING FUNCTIONS SECTION BEGINS */
+
 function draw_dividing_line(ctx)
 {
 	// drawing center dividing line
@@ -349,6 +455,25 @@ function draw_dividing_line(ctx)
 		ctx.strokeStyle = COLOR_BLACK;
 	ctx.closePath();
 }
+
+function draw_axis(ctx)
+{
+	ctx.beginPath();
+		// drawing x-axis
+		ctx.moveTo(main_body_oval_X, 0);
+		ctx.lineTo(main_body_oval_X, canv_height);
+		ctx.strokeStyle = COLOR_AQUA;
+		ctx.stroke();
+		// drawing y-axis
+		ctx.moveTo(0, main_body_oval_Y);
+		ctx.lineTo(canv_width, main_body_oval_Y);
+		ctx.strokeStyle = COLOR_AQUA;
+		ctx.stroke();	
+		ctx.strokeStyle = COLOR_BLACK;
+	ctx.closePath();
+}
+
+/* DEBUGGING FUNCTIONS SECTION ENDS */
 
 function draw_top(ctx)
 {

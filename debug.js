@@ -21,8 +21,8 @@ function main()
 		coord_x=250,
 		coord_y=200,
 		size=1.0,
-		debug_flag=true,
-		paint_flag=false);
+		debug_flag=false,
+		paint_flag=true);
 }
 
 function animate()
