@@ -63,6 +63,8 @@ function draw_tux(ctx, coord_x, coord_y, size, d_flag, p_flag)
 	draw_left_arm(ctx);
 	draw_right_arm(ctx);
 
+	draw_belly(ctx);
+
 	// drawing left foot
 	left_foot_X = left_hip_start_X - 30*s;
 	left_foot_Y = left_hip_start_Y + 250*s + 100*s;
@@ -74,7 +76,7 @@ function draw_tux(ctx, coord_x, coord_y, size, d_flag, p_flag)
 	draw_foot(ctx, right_foot_X, right_foot_Y);
 
 	draw_feet_jumper(ctx);
-
+	
 	draw_left_eye(ctx);
 	draw_left_pupil(ctx);
 
@@ -468,14 +470,59 @@ function draw_beak(ctx)
 			ctx.strokeStyle = COLOR_BLACK;
 		ctx.stroke();
 		ctx.strokeStyle = COLOR_BLACK;
-		
-
 	ctx.closePath();
 }
 
 function draw_belly(ctx)
 {
+	var l_x1 = left_hip_start_X - s*30 + 45*s;
+	var l_y1 = left_hip_start_Y + s*250 - 50*s;
+	var l_x2 = main_body_oval_X + s*(right_temple_X_offset/2) - 160*s;
+	var l_y2 = main_body_oval_Y + 220*s;
 
+	var r_x1 = main_body_oval_X + s*(right_temple_X_offset/2) + 160*s;
+	var r_y1 = main_body_oval_Y + 220*s;
+	var r_x2 = right_hip_start_X + s*30 - 45*s;
+	var r_y2 = right_hip_start_Y + s*250 - 50*s;
+
+	if (debug_flag)
+	{
+		ctx.fillStyle = COLOR_PURPLE;
+		ctx.fillRect(l_x1, l_y1, 3*s, 3*s);
+		ctx.fillRect(l_x2, l_y2, 3*s, 3*s);
+		ctx.fillRect(r_x1, r_y1, 3*s, 3*s);
+		ctx.fillRect(r_x2, r_y2, 3*s, 3*s);
+	}
+	
+	ctx.beginPath();
+/*4*/	ctx.moveTo(left_hip_start_X - 30*s,
+				   left_hip_start_Y + 250*s);
+		// drawing left curve
+		ctx.bezierCurveTo(l_x1, l_y1, l_x2, l_y2,
+						  main_body_oval_X + (right_temple_X_offset/2)*s,
+						  main_body_oval_Y + 220*s);
+		// drawing right curve
+/*5*/	ctx.bezierCurveTo(r_x1, r_y1, r_x2, r_y2,
+						  right_hip_start_X + 30*s,
+						  right_hip_start_Y + 250*s);
+		ctx.bezierCurveTo(right_hip_start_X + 30*s - 40*s,
+						  right_hip_start_Y + 250*s + 119*s,
+						  left_hip_start_X - 30*s + 40*s,
+						  left_hip_start_Y + 250*s + 119*s,
+						  left_hip_start_X - 30*s,
+						  left_hip_start_Y + 250*s);
+		ctx.lineWidth = 4;
+		ctx.strokeStyle = COLOR_JUMPER;
+		if (paint_flag)
+		{
+			ctx.fillStyle = COLOR_WHITE;
+			ctx.fill();
+			ctx.fillStyle = COLOR_BLACK;
+		}
+		ctx.stroke();
+		ctx.lineWidth = 1;
+		ctx.strokeStyle = COLOR_BLACK;
+	ctx.closePath();
 }
 
 function fill_if_paint_flag(ctx)
@@ -566,7 +613,7 @@ function draw_right_temple_side(ctx)
 		if (debug_flag)
 		{
 			ctx.fillStyle = COLOR_RED;
-/*9*/		ctx.fillRect(main_body_oval_X + s*right_temple_X_offset, main_body_oval_Y, s*5, s*5);
+	/*9*/	ctx.fillRect(main_body_oval_X + s*right_temple_X_offset, main_body_oval_Y, s*5, s*5);
 			ctx.font = TEXT_FONT_DEFAULT;
 			ctx.fillText("9", (main_body_oval_X + s*right_temple_X_offset) +10*s, (main_body_oval_Y) - 10*s);
 			ctx.fillStyle = COLOR_BLACK;
