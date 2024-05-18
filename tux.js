@@ -13,12 +13,17 @@ const COLOR_FOOT = 'rgba(205, 168, 9, 1)';
 const COLOR_JUMPER = 'rgba(99, 99, 99, 1)';
 const COLOR_BELLY = 'rgba(242, 242, 242, 1)';
 
+const COLOR_ORANGE_WIN = 'rgba(248, 104, 44, 1)';
+const COLOR_GREEN_WIN = 'rgba(145, 195, 0, 1)';
+const COLOR_BLUE_WIN = 'rgba(0, 180, 241, 1)';
+const COLOR_YELLOW_WIN = 'rgba(255, 195, 0, 1)';
+
 const TEXT_FONT_DEFAULT = "20px Arial";
 
-
+/* PENGUIN VARIABLES */
 var main_body_oval_X = 0; // starting x position of the tux
 var main_body_oval_Y = 0; // starting y position
-var s = 0.0; // size of the tux
+var s = 0.0; // size of the Tux
 var debug_flag = false;
 var paint_flag = false;
 
@@ -47,6 +52,17 @@ var beak_eye_Y = 0;
 //var foot_height = 50*s;
 
 
+/* GREATER THAN SIGN VARIABLES */
+var gr_sign_X = 0;
+var gr_sign_Y = 0;
+var gs = 0.0; // size of the greater than sign
+
+
+/* WINDOWS LOGO VARIALBES */
+var win_logo_X = 0;
+var win_logo_Y = 0;
+var ws = 0.0; // size of the windows logo
+
 
 // 'size' variable is the number from 0.1 to 1 where 1 means the original
 // and most huge size while 0.1 means the most small size of tux
@@ -63,6 +79,7 @@ function draw_tux(ctx, coord_x, coord_y, size, d_flag, p_flag)
 	draw_left_arm(ctx);
 	draw_right_arm(ctx);
 
+	// drawing the white belly
 	draw_belly(ctx);
 
 	// drawing left foot
@@ -84,12 +101,114 @@ function draw_tux(ctx, coord_x, coord_y, size, d_flag, p_flag)
 	draw_right_pupil(ctx);
 
 	draw_beak(ctx);
+}
 
-	// drawing the gray jumper between the foots
-	//alert(parseInt(left_foot_X + 165*s) + " " + left_foot_Y);
-	//alert(right_foot_X + " " + right_foot_Y);
+function draw_greater_than_sign(ctx, coord_x, coord_y, size, d_flag, p_flag)
+{
+	gr_sign_X = coord_x;
+	gr_sign_Y = coord_y;
+	gs = size;
+	debug_flag = d_flag;
+	paint_flag = p_flag;
 
-	// drawing the white belly
+	var p1_x = gr_sign_X + 220*gs;
+	var p1_y = gr_sign_Y + 90*gs;
+	draw_point_if_debug(ctx, p1_x, p1_y, COLOR_RED);
+
+	ctx.beginPath();
+		ctx.moveTo(gr_sign_X, gr_sign_Y);
+		ctx.lineTo(p1_x, p1_y);
+		ctx.bezierCurveTo(p1_x, p1_y,
+							 p1_x + 30*gs, // p2_x
+							 p1_y + 30*gs - 20*gs, // p2_y - 20
+							 p1_x + 30*gs,
+							 p1_y + 30*gs);
+
+		var p2_x = p1_x + 30*gs;
+		var p2_y = p1_y + 30*gs;
+		draw_point_if_debug(ctx, p2_x, p2_y, COLOR_RED);
+		
+		ctx.lineTo(p2_x, p2_y + 25*gs);
+		ctx.bezierCurveTo(p2_x,
+						  p2_y + 25*gs + 20*gs,
+						  p1_x, // p3_x
+						  p2_y + 25*gs + 30*gs, // p3_y
+						  p1_x,
+						  p2_y + 25*gs + 30*gs);
+
+		var p3_x = p1_x;
+		var p3_y = p2_y + 25*gs + 30*gs;
+		draw_point_if_debug(ctx, p3_x, p3_y, COLOR_RED);
+		
+		ctx.lineTo(gr_sign_X, // p4_x
+				   p1_y + 90*gs + 30*gs + 25*gs + 30*gs); // p4_y
+
+		var p4_x = gr_sign_X;
+		var p4_y = p1_y + 90*gs + 30*gs + 25*gs + 30*gs;
+
+		draw_point_if_debug(ctx, p4_x, p4_y, COLOR_RED);
+
+		ctx.bezierCurveTo(p4_x - 20*gs, p4_y,
+						  p4_x - 30*gs, p4_y - (30/2)*gs, // p5_x
+						  p4_x - 30*gs, p4_y - (30/2)*gs); // p5_y
+		
+		var p5_x = p4_x - 30*gs;
+		var p5_y = p4_y - (30/2)*gs;	
+		draw_point_if_debug(ctx, p5_x, p5_y, COLOR_RED);
+		
+		ctx.lineTo(p5_x - 6*gs, // p6_x
+				   p5_y - 14*gs); // p6_y
+		
+		var p6_x = p5_x - 6*gs;
+		var p6_y = p5_y - 14*gs;
+		draw_point_if_debug(ctx, p6_x, p6_y, COLOR_RED);
+		
+		ctx.bezierCurveTo(p6_x, p6_y - 20*gs,
+						  p6_x + 12*gs, p6_y - 30*gs, // p7_x
+						  p6_x + 12*gs, p6_y - 30*gs); // p7_y	
+		
+		var p7_x = p6_x + 12*gs;
+		var p7_y = p6_y - 30*gs;
+		draw_point_if_debug(ctx, p7_x, p7_y, COLOR_RED);
+
+		ctx.lineTo(p7_x + 180*gs, gr_sign_Y + (p4_y - gr_sign_Y)/2);
+		
+		var p8_x = p7_x + 180*s;
+		var p8_y = gr_sign_Y + (p4_y - gr_sign_Y)/2;
+		draw_point_if_debug(ctx, p8_x, p8_y, COLOR_RED);
+
+		ctx.lineTo(p7_x, gr_sign_Y + (p4_y - p7_y));
+		
+		var p9_x = p7_x;
+		var p9_y = gr_sign_Y + (p4_y - p7_y);
+		draw_point_if_debug(ctx, p9_x, p9_y, COLOR_RED);
+
+		ctx.bezierCurveTo(p9_x, p9_y,
+						  p9_x - (30/2)*s, p9_y - 30*s + 20*s, // p10_x
+						  p9_x - (30/2)*s, p9_y - 30*s); // p10_y
+
+		var p10_x = p9_x - (30/2)*s;
+		var p10_y = p9_y - 30*s;
+		draw_point_if_debug(ctx, p10_x, p10_y, COLOR_RED);
+
+		ctx.lineTo(p10_x + 6*s, p10_y - 14*s);
+
+		var p11_x = p10_x + 6*s;
+		var p11_y = p10_y - 14*s;	
+		draw_point_if_debug(ctx, p11_x, p11_y, COLOR_RED);
+		
+		ctx.bezierCurveTo(p11_x, p11_y,
+						  gr_sign_X - 20*s, gr_sign_Y,
+						  gr_sign_X, gr_sign_Y);
+						  
+		ctx.strokeStyle = COLOR_BLACK;
+		ctx.stroke();
+		fill_if_paint_flag(ctx, COLOR_BLACK);
+	ctx.closePath();
+}
+
+function draw_windows_logo(ctx, coord_x, coord_y, size, d_flag, p_flag)
+{
 
 }
 
@@ -525,12 +644,13 @@ function draw_belly(ctx)
 	ctx.closePath();
 }
 
-function fill_if_paint_flag(ctx)
+function fill_if_paint_flag(ctx, color)
 {
 	if (paint_flag)
 	{
-		ctx.fillStyle = COLOR_BLACK;
+		ctx.fillStyle = color;
 		ctx.fill();
+		ctx.fillStyle = COLOR_BLACK;
 	}
 }
 
@@ -564,6 +684,16 @@ function draw_axis(ctx)
 		ctx.stroke();	
 		ctx.strokeStyle = COLOR_BLACK;
 	ctx.closePath();
+}
+
+function draw_point_if_debug(ctx, x, y, color)
+{
+	if (debug_flag)
+	{
+		ctx.fillStyle = color;
+		ctx.fillRect(x, y, s*5, s*5);
+		ctx.fillStyle = COLOR_BLACK;
+	}
 }
 
 /* DEBUGGING FUNCTIONS SECTION ENDS */
@@ -602,7 +732,7 @@ function draw_left_temple_side(ctx)
 							 main_body_oval_X - s*45, main_body_oval_Y + s*250);
 		ctx.stroke();
 					
-		fill_if_paint_flag(ctx);
+		fill_if_paint_flag(ctx, COLOR_BLACK);
 	ctx.closePath();
 }
 
@@ -626,7 +756,7 @@ function draw_right_temple_side(ctx)
 							 main_body_oval_Y + s*250);
 		ctx.stroke();
 
-		fill_if_paint_flag(ctx);
+		fill_if_paint_flag(ctx, COLOR_BLACK);
 	ctx.closePath();
 }
 
@@ -692,7 +822,7 @@ function draw_left_hip_cont(ctx)
 							 left_hip_start_X - s*30, left_hip_start_Y + s*250);
 		ctx.stroke();
 					
-		fill_if_paint_flag(ctx);
+		fill_if_paint_flag(ctx, COLOR_BLACK);
 	ctx.closePath();
 }
 
@@ -714,7 +844,7 @@ function draw_right_hip_cont(ctx)
 							 right_hip_start_X + s*30, right_hip_start_Y + s*250);
 		ctx.stroke();
 
-		fill_if_paint_flag(ctx);
+		fill_if_paint_flag(ctx, COLOR_BLACK);
 	ctx.closePath();
 }
 
@@ -728,7 +858,7 @@ function draw_torso(ctx)
 						  right_hip_start_X + s*30, right_hip_start_Y + s*250);
 		ctx.stroke();
 
-		fill_if_paint_flag(ctx);
+		fill_if_paint_flag(ctx, COLOR_BLACK);
 	ctx.closePath();
 }
 

@@ -23,6 +23,20 @@ function main()
 		size=1.0,
 		debug_flag=false,
 		paint_flag=true);
+
+	draw_greater_than_sign(ctx,
+						   coord_x=800,
+						   coord_y=250,
+						   size=1.0,
+						   debug_flag=false,
+						   paint_flag=true);
+
+	draw_windows_logo(ctx,
+					  coord_x=400,
+					  coord_y = 250,
+					  size=1.0,
+					  debug_flag=true,
+					  paint_flag=false);
 }
 
 function animate()
@@ -41,11 +55,19 @@ function animate()
 	function drawShapes(ctx)
 	{
 		draw_tux(ctx,
-		coord_x=250,
-		coord_y=200,
-		inc_size,
-		debug_flag=false,
-		paint_flag=true);
+				 coord_x=250,
+				 coord_y=200,
+				 inc_size,
+				 debug_flag=false,
+				 paint_flag=true);
+
+		draw_greater_than_sign(ctx,
+						   coord_x=800,
+						   coord_y=250,
+						   size=inc_size,
+						   debug_flag=false,
+						   paint_flag=true);
+
 	}
 
 	function animation(canvas, ctx, startTime)
