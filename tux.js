@@ -119,10 +119,10 @@ function draw_greater_than_sign(ctx, coord_x, coord_y, size, d_flag, p_flag)
 		ctx.moveTo(gr_sign_X, gr_sign_Y);
 		ctx.lineTo(p1_x, p1_y);
 		ctx.bezierCurveTo(p1_x, p1_y,
-							 p1_x + 30*gs, // p2_x
-							 p1_y + 30*gs - 20*gs, // p2_y - 20
-							 p1_x + 30*gs,
-							 p1_y + 30*gs);
+						  p1_x + 30*gs, // p2_x
+						  p1_y + 30*gs - 20*gs, // p2_y - 20
+						  p1_x + 30*gs,
+						  p1_y + 30*gs);
 
 		var p2_x = p1_x + 30*gs;
 		var p2_y = p1_y + 30*gs;
@@ -173,7 +173,7 @@ function draw_greater_than_sign(ctx, coord_x, coord_y, size, d_flag, p_flag)
 
 		ctx.lineTo(p7_x + 180*gs, gr_sign_Y + (p4_y - gr_sign_Y)/2);
 		
-		var p8_x = p7_x + 180*s;
+		var p8_x = p7_x + 180*gs;
 		var p8_y = gr_sign_Y + (p4_y - gr_sign_Y)/2;
 		draw_point_if_debug(ctx, p8_x, p8_y, COLOR_RED);
 
@@ -184,21 +184,21 @@ function draw_greater_than_sign(ctx, coord_x, coord_y, size, d_flag, p_flag)
 		draw_point_if_debug(ctx, p9_x, p9_y, COLOR_RED);
 
 		ctx.bezierCurveTo(p9_x, p9_y,
-						  p9_x - (30/2)*s, p9_y - 30*s + 20*s, // p10_x
-						  p9_x - (30/2)*s, p9_y - 30*s); // p10_y
+						  p9_x - (30/2)*gs, p9_y - 30*gs + 20*gs, // p10_x
+						  p9_x - (30/2)*gs, p9_y - 30*gs); // p10_y
 
-		var p10_x = p9_x - (30/2)*s;
-		var p10_y = p9_y - 30*s;
+		var p10_x = p9_x - (30/2)*gs;
+		var p10_y = p9_y - 30*gs;
 		draw_point_if_debug(ctx, p10_x, p10_y, COLOR_RED);
 
-		ctx.lineTo(p10_x + 6*s, p10_y - 14*s);
+		ctx.lineTo(p10_x + 6*gs, p10_y - 14*gs);
 
-		var p11_x = p10_x + 6*s;
-		var p11_y = p10_y - 14*s;	
+		var p11_x = p10_x + 6*gs;
+		var p11_y = p10_y - 14*gs;	
 		draw_point_if_debug(ctx, p11_x, p11_y, COLOR_RED);
 		
 		ctx.bezierCurveTo(p11_x, p11_y,
-						  gr_sign_X - 20*s, gr_sign_Y,
+						  gr_sign_X - 20*gs, gr_sign_Y,
 						  gr_sign_X, gr_sign_Y);
 						  
 		ctx.strokeStyle = COLOR_BLACK;
@@ -209,7 +209,218 @@ function draw_greater_than_sign(ctx, coord_x, coord_y, size, d_flag, p_flag)
 
 function draw_windows_logo(ctx, coord_x, coord_y, size, d_flag, p_flag)
 {
+	win_logo_X = coord_x;
+	win_logo_Y = coord_y;
+	ws = size;
+	debug_flag = d_flag;
+	paint_flag = p_flag;
+	
+	// drawing top-left part
+	ctx.beginPath();
+		var tl_p1_x = win_logo_X;	
+		var tl_p1_y = win_logo_Y;
+		draw_point_if_debug(ctx, tl_p1_x, tl_p1_y, COLOR_RED);
+		
+		var tl_p2_x = tl_p1_x + 240*ws;
+		var tl_p2_y = tl_p1_y + 10*ws;
+		draw_point_if_debug(ctx, tl_p2_x, tl_p2_y, COLOR_RED);
 
+		var tl_c1_x1 = tl_p1_x + 160*ws; // x1 coordinate of the first curve
+		var tl_c1_y1 = tl_p1_y - 75*ws;
+		var tl_c1_x2 = tl_p2_x;
+		var tl_c1_y2 = tl_p2_y; // y1 coordinate of the second curve
+
+		if (debug_flag)
+		{
+			ctx.fillStyle = COLOR_PURPLE;
+			ctx.fillRect(tl_c1_x1, tl_c1_y1, 3*ws, 3*ws);
+			ctx.fillRect(tl_c1_x2, tl_c1_y2, 3*ws, 3*ws);
+		}
+
+		ctx.moveTo(tl_p1_x, tl_p1_y);
+		ctx.bezierCurveTo(tl_c1_x1, tl_c1_y1,
+						  tl_c1_x2, tl_c1_y2,
+						  tl_p1_x + 240*ws,
+						  tl_p1_y + 10*ws);
+
+		var tl_p3_x = tl_p2_x - 50*ws;
+		var tl_p3_y = tl_p2_y + 190*ws;
+
+		ctx.lineTo(tl_p3_x, tl_p3_y);
+		draw_point_if_debug(ctx, tl_p3_x, tl_p3_y, COLOR_RED);
+
+		var tl_p4_x = tl_p3_x - 240*ws;
+		var tl_p4_y = tl_p3_y - 10*ws;
+		draw_point_if_debug(ctx, tl_p4_x, tl_p4_y, COLOR_RED);
+		
+		var tl_c2_x1 = tl_p3_x;
+		var tl_c2_y1 = tl_p3_y;
+		var tl_c2_x2 = tl_p4_x + 160*ws;
+		var tl_c2_y2 = tl_p4_y - 75*ws;
+
+		ctx.bezierCurveTo(tl_c2_x1, tl_c2_y1,
+						  tl_c2_x2, tl_c2_y2,
+						  tl_p4_x, tl_p4_y);
+		ctx.lineTo(tl_p1_x, tl_p1_y);
+		fill_and_stroke_if_paint_flag(ctx, COLOR_ORANGE_WIN);
+	ctx.closePath();
+
+	// drawing top-right part
+	ctx.beginPath();	
+		// KEY MOMENT!!!
+		var tr_p1_x = tl_p2_x + 32*ws; // top-right first point x1
+		var tr_p1_y = tl_p2_y + 22*ws;
+		// KEY MOMENT!!!
+		draw_point_if_debug(ctx, tr_p1_x, tr_p1_y, COLOR_RED);	
+
+		var tr_p2_x = tr_p1_x + 240*ws;
+		var tr_p2_y = tr_p1_y + 10*ws;
+		draw_point_if_debug(ctx, tr_p2_x, tr_p2_y, COLOR_RED);
+
+		var tr_c1_x1 = tr_p1_x + 100*ws;
+		var tr_c1_y1 = tr_p1_y + 75*ws; // top-right first curve y1
+		var tr_c1_x2 = tr_p2_x;
+		var tr_c1_y2 = tr_p2_y;
+
+		if (debug_flag)
+		{
+			ctx.fillStyle = COLOR_PURPLE;
+			ctx.fillRect(tr_c1_x1, tr_c1_y1, 3*ws, 3*ws);
+			ctx.fillRect(tr_c1_x2, tr_c1_y2, 3*ws, 3*ws);
+		}
+
+		ctx.moveTo(tr_p1_x, tr_p1_y);
+
+		ctx.bezierCurveTo(tr_c1_x1, tr_c1_y1,
+						  tr_c1_x2, tr_c1_y2,
+						  tr_p2_x, tr_p2_y);
+
+		var tr_p3_x = tr_p2_x - 50*ws;
+		var tr_p3_y = tr_p2_y + 190*ws;
+
+		ctx.lineTo(tr_p3_x, tr_p3_y);
+		draw_point_if_debug(ctx, tr_p3_x, tr_p3_y, COLOR_RED);
+		
+		var tr_p4_x = tr_p3_x - 240*ws;
+		var tr_p4_y = tr_p3_y - 10*ws;
+		draw_point_if_debug(ctx, tr_p4_x, tr_p4_y, COLOR_RED);
+	
+		var tr_c2_x1 = tr_p3_x;
+		var tr_c2_y1 = tr_p3_y;
+		var tr_c2_x2 = tr_p4_x + 100*ws;
+		var tr_c2_y2 = tr_p4_y + 75*ws;
+
+		ctx.bezierCurveTo(tr_c2_x1, tr_c2_y1,
+						  tr_c2_x2, tr_c2_y2,
+						  tr_p4_x, tr_p4_y);
+		ctx.lineTo(tr_p1_x, tr_p1_y);
+		fill_and_stroke_if_paint_flag(ctx, COLOR_GREEN_WIN);
+	ctx.closePath();
+
+	// drawing bottom-left part
+	ctx.beginPath();	
+		// KEY MOMENT!!!
+		var bl_p1_x = tl_p4_x - 10*ws;
+		var bl_p1_y = tl_p4_y + 39*ws;
+		draw_point_if_debug(ctx, bl_p1_x, bl_p1_y, COLOR_RED);
+		// KEY MOMENT!!!
+		
+		var bl_p2_x = bl_p1_x + 240*ws;
+		var bl_p2_y = bl_p1_y + 10*ws;
+		draw_point_if_debug(ctx, bl_p2_x, bl_p2_y, COLOR_RED);
+
+		var bl_c1_x1 = bl_p1_x + 160*ws; // x1 coordinate of the first curve
+		var bl_c1_y1 = bl_p1_y - 75*ws;
+		var bl_c1_x2 = bl_p2_x;
+		var bl_c1_y2 = bl_p2_y; // y1 coordinate of the second curve
+
+		if (debug_flag)
+		{
+			ctx.fillStyle = COLOR_PURPLE;
+			ctx.fillRect(bl_c1_x1, bl_c1_y1, 3*ws, 3*ws);
+			ctx.fillRect(bl_c1_x2, bl_c1_y2, 3*ws, 3*ws);
+		}
+
+		ctx.moveTo(bl_p1_x, bl_p1_y);
+		ctx.bezierCurveTo(bl_c1_x1, bl_c1_y1,
+						  bl_c1_x2, bl_c1_y2,
+						  bl_p1_x + 240*ws,
+						  bl_p1_y + 10*ws);
+
+		var bl_p3_x = bl_p2_x - 50*ws;
+		var bl_p3_y = bl_p2_y + 190*ws;
+
+		ctx.lineTo(bl_p3_x, bl_p3_y);
+		draw_point_if_debug(ctx, bl_p3_x, bl_p3_y, COLOR_RED);
+
+		var bl_p4_x = bl_p3_x - 240*ws;
+		var bl_p4_y = bl_p3_y - 10*ws;
+		draw_point_if_debug(ctx, bl_p4_x, bl_p4_y, COLOR_RED);
+		
+		var bl_c2_x1 = bl_p3_x;
+		var bl_c2_y1 = bl_p3_y;
+		var bl_c2_x2 = bl_p4_x + 160*ws;
+		var bl_c2_y2 = bl_p4_y - 75*ws;
+
+		ctx.bezierCurveTo(bl_c2_x1, bl_c2_y1,
+						  bl_c2_x2, bl_c2_y2,
+						  bl_p4_x, bl_p4_y);
+		ctx.lineTo(bl_p1_x, bl_p1_y);
+		fill_and_stroke_if_paint_flag(ctx, COLOR_BLUE_WIN);
+	ctx.closePath();
+
+	// drawing bottom-right part
+	ctx.beginPath();	
+		// KEY MOMENT!!!
+		var br_p1_x = bl_p2_x + 32*ws; // top-right first point x1
+		var br_p1_y = bl_p2_y + 22*ws;
+		// KEY MOMENT!!!
+
+		draw_point_if_debug(ctx, br_p1_x, br_p1_y, COLOR_RED);
+		
+
+		var br_p2_x = br_p1_x + 240*ws;
+		var br_p2_y = br_p1_y + 10*ws;
+		draw_point_if_debug(ctx, br_p2_x, br_p2_y, COLOR_RED);
+
+		var br_c1_x1 = br_p1_x + 100*ws;
+		var br_c1_y1 = br_p1_y + 75*ws; // top-right first curve y1
+		var br_c1_x2 = br_p2_x;
+		var br_c1_y2 = br_p2_y;
+
+		if (debug_flag)
+		{
+			ctx.fillStyle = COLOR_PURPLE;
+			ctx.fillRect(br_c1_x1, br_c1_y1, 3*ws, 3*ws);
+			ctx.fillRect(br_c1_x2, br_c1_y2, 3*ws, 3*ws);
+		}
+
+		ctx.moveTo(br_p1_x, br_p1_y);
+		ctx.bezierCurveTo(br_c1_x1, br_c1_y1,
+						  br_c1_x2, br_c1_y2,
+						  br_p2_x, br_p2_y);
+
+		var br_p3_x = br_p2_x - 50*ws;
+		var br_p3_y = br_p2_y + 190*ws;
+
+		ctx.lineTo(br_p3_x, br_p3_y);
+		draw_point_if_debug(ctx, br_p3_x, br_p3_y, COLOR_RED);
+	
+		var br_p4_x = br_p3_x - 240*ws;
+		var br_p4_y = br_p3_y - 10*ws;
+		draw_point_if_debug(ctx, br_p4_x, br_p4_y, COLOR_RED);
+	
+		var br_c2_x1 = br_p3_x;
+		var br_c2_y1 = br_p3_y;
+		var br_c2_x2 = br_p4_x + 100*ws;
+		var br_c2_y2 = br_p4_y + 75*ws;
+
+		ctx.bezierCurveTo(br_c2_x1, br_c2_y1,
+						  br_c2_x2, br_c2_y2,
+						  br_p4_x, br_p4_y);
+		ctx.lineTo(br_p1_x, br_p1_y);
+		fill_and_stroke_if_paint_flag(ctx, COLOR_YELLOW_WIN);
+	ctx.closePath();
 }
 
 function draw_body(ctx)
@@ -344,17 +555,7 @@ function draw_foot(ctx, foot_X, foot_Y)
 						  foot_X + foot_width, foot_Y - foot_height);
 		ctx.bezierCurveTo(rc_x1, rc_y1, rc_x2, rc_y2, foot_X + foot_width, foot_Y);
 
-		if (paint_flag)
-		{
-			ctx.strokeStyle = COLOR_FOOT;
-			ctx.fillStyle = COLOR_FOOT;
-			ctx.fill();
-			ctx.fillStyle = COLOR_BLACK;
-		}
-		else
-			ctx.strokeStyle = COLOR_BLACK;
-		ctx.stroke();
-
+		fill_and_stroke_if_paint_flag(ctx, COLOR_FOOT);	
 	ctx.closePath();
 }
 
@@ -448,18 +649,7 @@ function draw_feet_jumper(ctx)
 		ctx.bezierCurveTo(X1, Y1, X2, Y2,
 						  left_foot_x1, left_foot_y1);
 
-		if (paint_flag)
-		{
-			ctx.strokeStyle = COLOR_JUMPER;
-			ctx.fillStyle = COLOR_JUMPER;
-			ctx.fill();
-			ctx.fillStyle = COLOR_BLACK;
-		}
-		else
-			ctx.strokeStyle = COLOR_GREEN;
-		ctx.stroke();
-		ctx.strokeStyle = COLOR_BLACK;
-
+		fill_and_stroke_if_paint_flag(ctx, COLOR_JUMPER);	
 	ctx.closePath();
 }
 
@@ -652,6 +842,25 @@ function fill_if_paint_flag(ctx, color)
 		ctx.fill();
 		ctx.fillStyle = COLOR_BLACK;
 	}
+}
+
+/* If paint_flag is set, the function fills the figure
+ * associated with the context with color and adds a stroke
+ * of the same color. If paint_flag is not set, the function
+ * does not fill the figure but still adds a stroke in black */
+function fill_and_stroke_if_paint_flag(ctx, color)
+{
+	if (paint_flag)
+	{
+		ctx.strokeStyle = color;
+		ctx.fillStyle = color;
+		ctx.fill();
+		ctx.fillStyle = COLOR_BLACK;
+	}
+	else
+		ctx.strokeStyle = COLOR_BLACK;
+	ctx.stroke();
+	ctx.strokeStyle = COLOR_BLACK;
 }
 
 /* DEBUGGING FUNCTIONS SECTION BEGINS */

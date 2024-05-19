@@ -26,17 +26,17 @@ function main()
 
 	draw_greater_than_sign(ctx,
 						   coord_x=800,
-						   coord_y=250,
+						   coord_y=300,
 						   size=1.0,
 						   debug_flag=false,
 						   paint_flag=true);
 
 	draw_windows_logo(ctx,
-					  coord_x=400,
-					  coord_y = 250,
+					  coord_x=1250,
+					  coord_y = 240,
 					  size=1.0,
-					  debug_flag=true,
-					  paint_flag=false);
+					  debug_flag=false,
+					  paint_flag=true);
 }
 
 function animate()
@@ -61,12 +61,19 @@ function animate()
 				 debug_flag=false,
 				 paint_flag=true);
 
-		draw_greater_than_sign(ctx,
+	draw_greater_than_sign(ctx,
 						   coord_x=800,
-						   coord_y=250,
-						   size=inc_size,
+						   coord_y=300,
+						   inc_size,
 						   debug_flag=false,
 						   paint_flag=true);
+
+	draw_windows_logo(ctx,
+					  coord_x=1250,
+					  coord_y = 240,
+					  inc_size,
+					  debug_flag=false,
+					  paint_flag=true);
 
 	}
 
